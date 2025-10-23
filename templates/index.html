@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text to Handwriting</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f1527, #242043, #3b2c64);
+      font-family: 'Inter', sans-serif;
+      color: #eee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding-top: 60px;
+    }
+    .card {
+      backdrop-filter: blur(14px);
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 30px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    }
+    textarea, select, input[type=color], button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      margin-top: 12px;
+      font-size: 1rem;
+    }
+    button {
+      background: linear-gradient(135deg, #007cf0, #00dfd8);
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      transform: scale(1.03);
+    }
+    img {
+      margin-top: 20px;
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    a {
+      color: #00dfd8;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>🖊 Text to Handwriting Generator</h1>
+  <div class="card">
+    <form action="/generate" method="POST">
+      <textarea name="text" rows="6" placeholder="Type your text here..." required></textarea>
+      <br><label>Select Font:</label>
+      <select name="font">
+        {% for f in fonts %}
+        <option value="{{ f }}">{{ f }}</option>
+        {% endfor %}
+      </select>
+      <label>Choose Pen Color:</label>
+      <input type="color" name="color" value="#000000">
+      <button type="submit">Generate Handwriting</button>
+    </form>
+
+    {% if img %}
+    
+      <h3>Result:</h3>
+      <img src="{{ img }}" alt="Generated Handwriting">
+      <p><a href="{{ pdf }}" download>📄 Download as PDF</a></p>
+    {% endif %}
+  </div>
+</body>
+</html>
